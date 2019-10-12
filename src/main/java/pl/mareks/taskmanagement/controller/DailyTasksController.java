@@ -3,6 +3,7 @@ package pl.mareks.taskmanagement.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.mareks.taskmanagement.common.exception.DailyTasksNotFoundException;
 import pl.mareks.taskmanagement.model.DailyTasksDTO;
 import pl.mareks.taskmanagement.service.DailyTasksService;
 
@@ -36,7 +37,12 @@ public class DailyTasksController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<Void> delete(@RequestParam("date") Date theDate) {
-        dailyTasksService.delete(theDate);
+        try {
+            dailyTasksService.delete(theDate);
+        } catch (DailyTasksNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(400).build();
+        }
         return ResponseEntity.status(204).build();
     }
 }

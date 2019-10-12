@@ -3,6 +3,7 @@ package pl.mareks.taskmanagement.service;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.mareks.taskmanagement.common.exception.DailyTasksNotFoundException;
 import pl.mareks.taskmanagement.model.DailyTasksDTO;
 import pl.mareks.taskmanagement.model.DailyTasksEntity;
 import pl.mareks.taskmanagement.repository.DailyTasksRepository;
@@ -50,8 +51,9 @@ public class DailyTasksService {
         return mapToDailyTasksDTO(savedDailyTasks);
     }
 
-    public void delete(Date date) {
-        DailyTasksEntity theDailyTasks = dailyTasksRepository.findByDate(date).orElseThrow();
+    public void delete(Date date) throws DailyTasksNotFoundException {
+        DailyTasksEntity theDailyTasks = dailyTasksRepository.findByDate(date)
+                .orElseThrow(()->new DailyTasksNotFoundException("Tasks for day "+date+" not exist"));
         dailyTasksRepository.delete(theDailyTasks);
     }
 
