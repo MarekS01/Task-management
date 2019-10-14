@@ -1,6 +1,6 @@
 # Task-management
 TODO Rest application that allows you to planning daily tasks.
-####Possible operations:
+### Possible operations:
 * create a new task for specific day
 * complete the selected task
 * delete a task
@@ -8,13 +8,13 @@ TODO Rest application that allows you to planning daily tasks.
 * find all undone tasks
 * find all tasks for specific day
 * delete daily tasks
-####Prerequisites
+### Prerequisites
 * Java 8 or newer
 * MySQL server
 * Import Schema.sql with resources to MySQL
 * Your preferred IDE (f.e. IntelliJ IDEA)
 * REST client like Insomnia or Postman
-####Used technologies and tools
+### Used technologies and tools
 * Spring: MVC, DATA
 * MySQL 5.7
 * Insomnia REST client
