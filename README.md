@@ -11,6 +11,7 @@ TODO Rest application that allows you to planning daily tasks.
 ####Prerequisites
 * Java 8 or newer
 * MySQL server
+* Import Schema.sql with resources to MySQL
 * Your preferred IDE (f.e. IntelliJ IDEA)
 * REST client like Insomnia or Postman
 ####Used technologies and tools
