@@ -2,11 +2,13 @@ package pl.mareks.taskmanagement.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.mareks.taskmanagement.common.exception.TaskNotFoundException;
 import pl.mareks.taskmanagement.model.TaskDTO;
 import pl.mareks.taskmanagement.service.TaskService;
 
+import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
 
@@ -23,14 +25,18 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(@RequestParam("date")Date theDate,
-                                       @RequestBody TaskDTO taskDTO){
-        taskService.addTask(theDate,taskDTO);
+    public ResponseEntity<Void> create(@RequestParam("date") Date theDate,
+                                       @RequestBody @Valid TaskDTO taskDTO,
+                                       BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(400).build();
+        }
+        taskService.addTask(theDate, taskDTO);
         return ResponseEntity.status(201).build();
     }
 
     @PutMapping("/done")
-    public ResponseEntity<Void> doneTask(@RequestParam("id") Long id){
+    public ResponseEntity<Void> doneTask(@RequestParam("id") Long id) {
         try {
             taskService.doneTask(id);
         } catch (TaskNotFoundException e) {
@@ -41,7 +47,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteTask(@RequestParam("id")Long id){
+    public ResponseEntity<Void> deleteTask(@RequestParam("id") Long id) {
         try {
             taskService.deleteTask(id);
         } catch (TaskNotFoundException e) {
